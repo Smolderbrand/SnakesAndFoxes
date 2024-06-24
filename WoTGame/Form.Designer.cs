@@ -49,7 +49,7 @@
             this.btnRoll.TabIndex = 0;
             this.btnRoll.Text = "Roll";
             this.btnRoll.UseVisualStyleBackColor = true;
-            this.btnRoll.Click += new System.EventHandler(this.btnRoll_Click);
+            this.btnRoll.Click += new System.EventHandler(this.btnRollClick);
             // 
             // lblGameState
             // 
@@ -91,13 +91,13 @@
             this.MaximizeBox = false;
             this.Name = "frmMain";
             this.Text = "Snakes and Foxes";
-            this.Load += new System.EventHandler(this.frmMain_Load);
+            this.Load += new System.EventHandler(this.frmMainLoad);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.frmMain_MouseClick);
-            this.Resize += new System.EventHandler(this.FrmMain_SizeChanged);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.frmMainMouseClick);
+            this.Resize += new System.EventHandler(this.frmMainSizeChanged);
             this.ResumeLayout(false);
             this.PerformLayout();
-            this.tmrTimer.Tick += this.TmrTimer_Tick;
+            this.tmrTimer.Tick += this.tmrTimerTick;
             this.tmrTimer.Interval = 100;
             this.tmrTimer.Enabled = true;
         }

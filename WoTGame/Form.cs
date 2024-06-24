@@ -44,29 +44,28 @@ namespace WoTGame
         private double sensitivity;
 
         private Point coords;
-        GameState gameState;
+        private GameState gameState;
 
         private int noPlayers, isSimulated;
         private int rolledMoves, rolledSnakes, rolledFoxes;
         private int isCaptured, capturedID;
         private Point capture;
 
-        private void NewGame()
+        private void newGame()
         {
             gameState.pOneX = -1; gameState.pOneY = 0;
             gameState.pTwoX = -1; gameState.pTwoY = 0;
             gameState.stateOne = 0; gameState.stateTwo = 0;
-            int i;
             gameState.SnakesX = new int[8];
             gameState.SnakesY = new int[8];
-            for (i = 0; i < 8; i++)
+            for (int i = 0; i < 8; ++i)
             {
                 gameState.SnakesX[i] = 7;
                 gameState.SnakesY[i] = 2 * i;
             }
             gameState.FoxesX = new int[8];
             gameState.FoxesY = new int[8];
-            for (i = 0; i < 8; i++)
+            for (int i = 0; i < 8; ++i)
             {
                 gameState.FoxesX[i] = 7;
                 gameState.FoxesY[i] = 2 * i + 1;
@@ -74,7 +73,7 @@ namespace WoTGame
             gameState.StateID = (int)GameStates.StatePlayerOneRolling;
         }
 
-        private void FrmMain_SizeChanged(object sender, EventArgs e)
+        private void frmMainSizeChanged(object sender, EventArgs e)
         {
             int height = this.Size.Height;
             if (height >= 200)
@@ -85,6 +84,11 @@ namespace WoTGame
             this.Invalidate();
         }
 
+        private bool isOnACircle(int x, int y)
+        {
+            return x > 0 && x < 8 && y >= 0 && y < 16;
+        }
+
         private Point getPointForCoords(int x, int y)
         {
             int center = this.windowSize / 2 - 15;
@@ -92,7 +96,7 @@ namespace WoTGame
             {
                 return new Point(center, center);
             }
-            if ((x > 0) && (x < 8) && (y >= 0) && (y < 16))
+            if (isOnACircle(x, y))
             {
                 double angle = -Math.PI + Math.PI / 16 + y * Math.PI / 8;
                 int diffX = (int)Math.Floor(Math.Cos(angle) * circleStep * 2 * (1 + x));
@@ -102,12 +106,14 @@ namespace WoTGame
             return new Point(0, 0);
         }
 
-        private void TmrTimer_Tick(object sender, System.EventArgs e)
+        private void tmrTimerTick(object sender, System.EventArgs e)
         {
             int x = this.PointToClient(Cursor.Position).X;
             int y = this.PointToClient(Cursor.Position).Y;
-            if ((x < 0) || (y < 0) || (x > this.windowSize) || (y > this.windowSize))
+            if (x < 0 || y < 0 || x > windowSize || y > windowSize)
+            {
                 coords = new Point(0, 0);
+            } 
             else
             {
                 int relx = x - this.windowSize / 2 + 15;
@@ -126,12 +132,12 @@ namespace WoTGame
                             if (dist2 > circleStep * circleStep * (i - sensitivity) * (i - sensitivity))
                                 xres = i / 2 - 1;
                     double angle = Math.Atan2(-rely, relx) + Math.PI - Math.PI / 16;
-                    for (i = 0; i <= 15; i++)
+                    for (i = 0; i <= 15; ++i)
                         if (angle > (Math.PI / 8) * (i - sensitivity))
                             if (angle < (Math.PI / 8) * (i + sensitivity))
                                 yres = i;
                 }
-                this.Text = xres.ToString() + " " + yres.ToString();
+                Text = xres.ToString() + " " + yres.ToString();
                 coords = new Point(xres, yres);
             }
         }
@@ -148,10 +154,12 @@ namespace WoTGame
                 int center = this.windowSize / 2 - 15;
                 int i, size, beginX, beginY, endX, endY;
                 circleStep = (int)Math.Floor((double)(this.windowSize - 30) * 0.025);
-                e.Graphics.DrawEllipse(p, center - circleStep, center - circleStep, circleStep * 2, circleStep * 2);
-                e.Graphics.DrawEllipse(p, center - circleStep * 16, center - circleStep * 16, circleStep * 32, circleStep * 32);
+                int diff = center - circleStep;
+                e.Graphics.DrawEllipse(p, diff, diff, circleStep * 2, circleStep * 2);
+                diff = center - circleStep * 16;
+                e.Graphics.DrawEllipse(p, diff, diff, circleStep * 32, circleStep * 32);
                 double angle;
-                for (i = 1; i <= 16; i++)
+                for (i = 1; i <= 16; ++i)
                 {
                     angle = Math.PI / 16 + i * Math.PI / 8;
                     beginX = (int)Math.Floor(Math.Sin(angle) * circleStep);
@@ -161,22 +169,22 @@ namespace WoTGame
                     e.Graphics.DrawLine(p, center + beginX, center + beginY, center + endX, center + endY);
                 }
                 p = new Pen(Color.Red, 2);
-                for (i = 1; i <= 3; i++) {
+                for (i = 1; i <= 3; ++i) {
                     size = circleStep * 4 * i;
                     e.Graphics.DrawEllipse(p, center - size, center - size, size * 2, size * 2);
                 }
                 p = new Pen(Color.Green, 2);
-                for (i = 1; i <= 3; i++) {
+                for (i = 1; i <= 3; ++i) {
                     size = circleStep * (4 * i + 2);
                     e.Graphics.DrawEllipse(p, center - size, center - size, size * 2, size * 2);
                 }
                 Point at;
-                for (i = 0; i < 8; i++) {
+                for (i = 0; i < 8; ++i) {
                     at = getPointForCoords(gameState.FoxesX[i], gameState.FoxesY[i]);
                     at.X -= 16; at.Y -= 16;
                     e.Graphics.DrawImage(fox, at);
                 }
-                for (i = 0; i < 8; i++)
+                for (i = 0; i < 8; ++i)
                 {
                     at = getPointForCoords(gameState.SnakesX[i], gameState.SnakesY[i]);
                     at.X -= 16; at.Y -= 16;
@@ -207,7 +215,8 @@ namespace WoTGame
                             e.Graphics.DrawImage(pTwo, at);
                         }
                     }
-                } else
+                }
+                else
                 {
                     at = getPointForCoords(gameState.pOneX, gameState.pOneY);
                     at.X -= 16; at.Y -= 16;
@@ -230,11 +239,10 @@ namespace WoTGame
 
         private bool isEnemy(int x, int y)
         {
-            int i;
-            for (i = 0; i < 8; i++)
+            for (int i = 0; i < 8; ++i)
                 if ((gameState.SnakesX[i] == x) && (gameState.SnakesY[i] == y))
                     return true;
-            for (i = 0; i < 8; i++)
+            for (int i = 0; i < 8; ++i)
                 if ((gameState.FoxesX[i] == x) && (gameState.FoxesY[i] == y))
                     return true;
             return false;
@@ -242,11 +250,7 @@ namespace WoTGame
 
         private bool isPlayer(int x, int y)
         {
-            if ((gameState.pOneX == x) && (gameState.pOneY == y))
-                return true;
-            if ((gameState.pTwoX == x) && (gameState.pTwoY == y))
-                return true;
-            return false;
+            return ((gameState.pOneX == x) && (gameState.pOneY == y)) || ((gameState.pTwoX == x) && (gameState.pTwoY == y));
         }
 
         private bool isFree(int x, int y)
@@ -256,26 +260,27 @@ namespace WoTGame
 
         private bool canMoveTo(int x, int y, int z, int w)
         {
-            int fl = 0;
+            int adjacent = 0;
             if ((x == -1) && (z == 1))
-                fl = 1;
+                adjacent = 1;
             if ((x == 1) && (z == -1))
-                fl = 1;
+                adjacent = 1;
             if ((y == w) && (x + 1 == z))
-                fl = 1;
+                adjacent = 1;
             if ((y == w) && (z + 1 == x))
-                fl = 1;
+                adjacent = 1;
             if ((x == z) && ((w + 1) % 16 == y) && ((x % 2 == 0) || (x == 7)))
-                fl = 1;
+                adjacent = 1;
             if ((x == z) && ((y + 1) % 16 == w) && (x % 2 == 1))
-                fl = 1;
-            if (fl == 0) return false;
+                adjacent = 1;
+            if ((x == 0) || (z == 0)) return false;
+            if (adjacent == 0) return false;
             if (isFree(z, w)) return true;
             if (isEnemy(x, y) && isPlayer(z, w)) return true;
             return false;
         }
 
-        private void frmMain_MouseClick(object sender, MouseEventArgs e)
+        private void frmMainMouseClick(object sender, MouseEventArgs e)
         {
             switch (e.Button)
             {
@@ -304,8 +309,8 @@ namespace WoTGame
                             }
                             else if (isCaptured == 0)
                             {
-                                int en = -1, i;
-                                for (i = 0; i < 8; i++)
+                                int en = -1;
+                                for (int i = 0; i < 8; ++i)
                                     if ((gameState.SnakesX[i] == coords.X) && (gameState.SnakesY[i] == coords.Y))
                                     {
                                         en = i;
@@ -332,8 +337,8 @@ namespace WoTGame
                             }
                             else if (isCaptured == 0)
                             {
-                                int en = -1, i;
-                                for (i = 0; i < 8; i++)
+                                int en = -1;
+                                for (int i = 0; i < 8; ++i)
                                     if ((gameState.FoxesX[i] == coords.X) && (gameState.FoxesY[i] == coords.Y))
                                     {
                                         en = i;
@@ -491,7 +496,7 @@ namespace WoTGame
 
         private void updateGameState()
         {
-            int hasChanged = 1, i;
+            int hasChanged = 1;
             while (hasChanged == 1)
             {
                 hasChanged = 0;
@@ -549,7 +554,7 @@ namespace WoTGame
                     hasChanged = 1;
                     updateScore();
                 }
-                for (i = 0; i < 8; i++)
+                for (int i = 0; i < 8; ++i)
                 {
                     if ((gameState.SnakesX[i] == gameState.pOneX) && (gameState.SnakesY[i] == gameState.pOneY))
                     {
@@ -584,8 +589,18 @@ namespace WoTGame
             updateLabel();
             if (((noPlayers == 2) && (gameState.stateOne > 1) && (gameState.stateTwo > 1)) || ((noPlayers == 1) && (gameState.stateOne > 1)))
             {
-                MessageBox.Show(lblScore.Text, "Game over!", MessageBoxButtons.OK);
-                Environment.Exit(0);
+                DialogResult d = MessageBox.Show(lblScore.Text + "\nNew game?", "Game over!", MessageBoxButtons.YesNo);
+                if (d == DialogResult.Yes)
+                {
+                    newGame();
+                    updateLabel();
+                    this.lblRoll.Text = "Ready";
+                    this.Invalidate();
+                }
+                else
+                {
+                    Environment.Exit(0);
+                }
             }
         }
 
@@ -601,16 +616,16 @@ namespace WoTGame
                 return "Player 2";
         }
 
-        private void btnRoll_Click(object sender, EventArgs e)
+        private void btnRollClick(object sender, EventArgs e)
         {
             if ((gameState.StateID == 1) || (gameState.StateID == 5))
             {
-                int i, val;
+                int val;
                 Random rnd = new Random();
                 rolledMoves = 0;
                 rolledSnakes = 0;
                 rolledFoxes = 0;
-                for (i = 0; i < 6; i++)
+                for (int i = 0; i < 6; ++i)
                 {
                     val = rnd.Next(1, 7);
                     if ((val == 1) || (val == 2))
@@ -627,7 +642,7 @@ namespace WoTGame
             }
         }
 
-        private void frmMain_Load(object sender, EventArgs e)
+        private void frmMainLoad(object sender, EventArgs e)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load("game.xml");
@@ -643,7 +658,7 @@ namespace WoTGame
             else
                 isSimulated = 0;
             doc = null;
-            NewGame();
+            newGame();
         }
     }
 }
