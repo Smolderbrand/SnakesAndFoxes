@@ -1,5 +1,5 @@
 <root>
 <display size="600" sensitivity="40"></display>
-<playercount size="2"></playercount>
-<simulation value="false"></simulation>
+<playercount size="1"></playercount>
+<simulation value="true"></simulation>
 </root>
