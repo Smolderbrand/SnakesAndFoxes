@@ -195,93 +195,91 @@ namespace WoTGame
 
         private void frmMainMouseClick(object sender, MouseEventArgs e)
         {
-            switch (e.Button)
+            if (e.Button == MouseButtons.Left)
             {
-                case MouseButtons.Left:
-                    switch (gameState.StateID)
+                if (gameState.StateID == 2)
+                {
+                    if (canMoveTo(gameState.pOneX, gameState.pOneY, coords.X, coords.Y))
                     {
-                        case 2:
-                            if (canMoveTo(gameState.pOneX, gameState.pOneY, coords.X, coords.Y))
-                            {
-                                gameState.pOneX = coords.X;
-                                gameState.pOneY = coords.Y;
-                                validateBoundaries();
-                                rolledMoves--;
-                                updateGameState();
-                            }
-                            break;
-                        case 3:
-                        case 7:
-                            if ((isCaptured == 1) && canMoveTo(capture.X, capture.Y, coords.X, coords.Y))
-                            {
-                                gameState.SnakesX[capturedID] = coords.X;
-                                gameState.SnakesY[capturedID] = coords.Y;
-                                rolledSnakes--;
-                                isCaptured = 0;
-                                updateGameState();
-                            }
-                            else if (isCaptured == 0)
-                            {
-                                int en = -1;
-                                for (int i = 0; i < 8; ++i)
-                                    if ((gameState.SnakesX[i] == coords.X) && (gameState.SnakesY[i] == coords.Y))
-                                    {
-                                        en = i;
-                                        break;
-                                    }
-                                if (en > -1)
-                                {
-                                    isCaptured = 1;
-                                    capturedID = en;
-                                    capture = new Point(coords.X, coords.Y);
-                                }
-                                updateLabel();
-                            }
-                            break;
-                        case 4:
-                        case 8:
-                            if ((isCaptured == 1) && canMoveTo(capture.X, capture.Y, coords.X, coords.Y))
-                            {
-                                gameState.FoxesX[capturedID] = coords.X;
-                                gameState.FoxesY[capturedID] = coords.Y;
-                                rolledFoxes--;
-                                isCaptured = 0;
-                                updateGameState();
-                            }
-                            else if (isCaptured == 0)
-                            {
-                                int en = -1;
-                                for (int i = 0; i < 8; ++i)
-                                    if ((gameState.FoxesX[i] == coords.X) && (gameState.FoxesY[i] == coords.Y))
-                                    {
-                                        en = i;
-                                        break;
-                                    }
-                                if (en > -1)
-                                {
-                                    isCaptured = 1;
-                                    capturedID = en;
-                                    capture = new Point(coords.X, coords.Y);
-                                }
-                            }
-                            updateLabel();
-                            break;
-                        case 6:
-                            if (canMoveTo(gameState.pTwoX, gameState.pTwoY, coords.X, coords.Y))
-                            {
-                                gameState.pTwoX = coords.X;
-                                gameState.pTwoY = coords.Y;
-                                validateBoundaries();
-                                rolledMoves--;
-                                updateGameState();
-                            }
-                            break;
+                        gameState.pOneX = coords.X;
+                        gameState.pOneY = coords.Y;
+                        validateBoundaries();
+                        rolledMoves--;
+                        updateGameState();
                     }
-                    break;
-                case MouseButtons.Right:
-                    isCaptured = 0;
+                }
+                else if ((gameState.StateID == 3) || (gameState.StateID == 7))
+                {
+                    if ((isCaptured == 1) && canMoveTo(capture.X, capture.Y, coords.X, coords.Y))
+                    {
+                        gameState.SnakesX[capturedID] = coords.X;
+                        gameState.SnakesY[capturedID] = coords.Y;
+                        rolledSnakes--;
+                        isCaptured = 0;
+                        updateGameState();
+                    }
+                    else if (isCaptured == 0)
+                    {
+                        int en = -1;
+                        for (int i = 0; i < 8; ++i)
+                            if ((gameState.SnakesX[i] == coords.X) && (gameState.SnakesY[i] == coords.Y))
+                            {
+                                en = i;
+                                break;
+                            }
+                        if (en > -1)
+                        {
+                            isCaptured = 1;
+                            capturedID = en;
+                            capture = new Point(coords.X, coords.Y);
+                        }
+                        updateLabel();
+                    }
+                }
+                else if ((gameState.StateID == 4) || (gameState.StateID == 8))
+                {
+                    if ((isCaptured == 1) && canMoveTo(capture.X, capture.Y, coords.X, coords.Y))
+                    {
+                        gameState.FoxesX[capturedID] = coords.X;
+                        gameState.FoxesY[capturedID] = coords.Y;
+                        rolledFoxes--;
+                        isCaptured = 0;
+                        updateGameState();
+                    }
+                    else if (isCaptured == 0)
+                    {
+                        int en = -1;
+                        for (int i = 0; i < 8; ++i)
+                            if ((gameState.FoxesX[i] == coords.X) && (gameState.FoxesY[i] == coords.Y))
+                            {
+                                en = i;
+                                break;
+                            }
+                        if (en > -1)
+                        {
+                            isCaptured = 1;
+                            capturedID = en;
+                            capture = new Point(coords.X, coords.Y);
+                        }
+                    }
                     updateLabel();
-                    break;
+                }
+                else if (gameState.StateID == 6)
+                {
+                    if (canMoveTo(gameState.pTwoX, gameState.pTwoY, coords.X, coords.Y))
+                    {
+                        gameState.pTwoX = coords.X;
+                        gameState.pTwoY = coords.Y;
+                        validateBoundaries();
+                        rolledMoves--;
+                        updateGameState();
+                    }
+                }
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                isCaptured = 0;
+                updateLabel();
             }
             updateScore();
             this.Invalidate();

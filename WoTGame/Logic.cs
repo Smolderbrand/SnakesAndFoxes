@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
 
 namespace WoTGame
 {
@@ -121,124 +114,90 @@ namespace WoTGame
         private void updateScore()
         {
             string s = "";
-            switch (noPlayers)
+            if (noPlayers == 1)
             {
-                case 1:
-                    switch (gameState.stateOne)
-                    {
-                        case 0:
-                            s += "Player in progress.";
-                            break;
-                        case 1:
-                            s += "Player returning.";
-                            break;
-                        case 2:
-                            s += "Player has escaped!";
-                            break;
-                        case 3:
-                            s += "Player captured!";
-                            break;
-                    }
-                    break;
-                case 2:
-                    switch (gameState.stateOne)
-                    {
-                        case 0:
-                            s += "Player 1: in progress; \n";
-                            break;
-                        case 1:
-                            s += "Player 1: returning; \n";
-                            break;
-                        case 2:
-                            s += "Player 1: has escaped; \n";
-                            break;
-                        case 3:
-                            s += "Player 1: captured; \n";
-                            break;
-                    }
-                    switch (gameState.stateTwo)
-                    {
-                        case 0:
-                            s += "Player 2: in progress.";
-                            break;
-                        case 1:
-                            s += "Player 2: returning.";
-                            break;
-                        case 2:
-                            s += "Player 2: has escaped.";
-                            break;
-                        case 3:
-                            s += "Player 2: captured. ";
-                            break;
-                    }
-                    break;
+                if (gameState.stateOne == 0)
+                    s += "Player in progress.";
+                else if (gameState.stateOne == 1)
+                    s += "Player returning.";
+                else if (gameState.stateOne == 2)
+                    s += "Player has escaped!";
+                else
+                    s += "Player captured!";
+            }
+            else
+            {
+                if (gameState.stateOne == 0)
+                    s += "Player 1: in progress; \n";
+                else if (gameState.stateOne == 1)
+                    s += "Player 1: returning; \n";
+                else if (gameState.stateOne == 2)
+                    s += "Player 1: has escaped; \n";
+                else
+                    s += "Player 1: captured; \n";
+                if (gameState.stateTwo == 0)
+                    s += "Player 2: in progress.";
+                else if (gameState.stateTwo == 1)
+                    s += "Player 2: returning.";
+                else if (gameState.stateTwo == 2)
+                    s += "Player 2: has escaped.";
+                else
+                    s += "Player 2: captured. ";
             }
             lblScore.Text = s;
         }
 
         private void updateLabel()
         {
-            switch (noPlayers)
+            if (noPlayers == 1)
             {
-                case 1:
-                    switch (gameState.StateID)
-                    {
-                        case 1:
-                            lblGameState.Text = "The player rolls";
-                            break;
-                        case 2:
-                            lblGameState.Text = "The player moves";
-                            break;
-                        case 3:
-                            lblGameState.Text = "The snakes move";
-                            break;
-                        case 4:
-                            lblGameState.Text = "The foxes move";
-                            break;
-                    }
-                    break;
-                case 2:
-                    switch (gameState.StateID)
-                    {
-                        case 1:
-                            lblGameState.Text = "Player 1 rolls";
-                            break;
-                        case 2:
-                            lblGameState.Text = "Player 1 moves";
-                            break;
-                        case 3:
-                            if (isCaptured == 1)
-                                lblGameState.Text = "Player 2 moves snake " + capturedID.ToString();
-                            else
-                                lblGameState.Text = "Player 2 selects a snake";
-                            break;
-                        case 4:
-                            if (isCaptured == 1)
-                                lblGameState.Text = "Player 2 moves fox " + capturedID.ToString();
-                            else
-                                lblGameState.Text = "Player 2 selects a fox";
-                            break;
-                        case 5:
-                            lblGameState.Text = "Player 2 rolls";
-                            break;
-                        case 6:
-                            lblGameState.Text = "Player 2 moves";
-                            break;
-                        case 7:
-                            if (isCaptured == 1)
-                                lblGameState.Text = "Player 1 moves snake " + capturedID.ToString();
-                            else
-                                lblGameState.Text = "Player 1 selects a snake";
-                            break;
-                        case 8:
-                            if (isCaptured == 1)
-                                lblGameState.Text = "Player 1 moves fox " + capturedID.ToString();
-                            else
-                                lblGameState.Text = "Player 1 selects a fox";
-                            break;
-                    }
-                    break;
-
+                if (gameState.StateID == 1)
+                    lblGameState.Text = "The player rolls";
+                else if (gameState.StateID == 2)
+                    lblGameState.Text = "The player moves";
+                else if (gameState.StateID == 3)
+                    lblGameState.Text = "The snakes move";
+                else
+                    lblGameState.Text = "The foxes move";
+            }
+            else
+            {
+                if (gameState.StateID == 1)
+                    lblGameState.Text = "Player 1 rolls";
+                else if (gameState.StateID == 2)
+                    lblGameState.Text = "Player 1 moves";
+                else if (gameState.StateID == 3)
+                {
+                    if (isCaptured == 1)
+                        lblGameState.Text = "Player 2 moves snake " + capturedID.ToString();
+                    else
+                        lblGameState.Text = "Player 2 selects a snake";
+                }
+                else if (gameState.StateID == 4)
+                {
+                    if (isCaptured == 1)
+                        lblGameState.Text = "Player 2 moves fox " + capturedID.ToString();
+                    else
+                        lblGameState.Text = "Player 2 selects a fox";
+                }
+                else if (gameState.StateID == 5)
+                    lblGameState.Text = "Player 2 rolls";
+                else if (gameState.StateID == 6)
+                    lblGameState.Text = "Player 2 moves";
+                else if (gameState.StateID == 7)
+                {
+                    if (isCaptured == 1)
+                        lblGameState.Text = "Player 1 moves snake " + capturedID.ToString();
+                    else
+                        lblGameState.Text = "Player 1 selects a snake";
+                }
+                else if (gameState.StateID == 8)
+                {
+                    if (isCaptured == 1)
+                        lblGameState.Text = "Player 1 moves fox " + capturedID.ToString();
+                    else
+                        lblGameState.Text = "Player 1 selects a fox";
+                }
             }
         }
 
@@ -276,18 +235,18 @@ namespace WoTGame
             int[,] dist = new int[8, 16];
             bool[,] sptSet = new bool[8, 16];
             int aux;
-            for (int s = 0; s < 8; s++)
+            for (int s = 0; s < 8; ++s)
             {
-                for (int i = 0; i < 8; i++)
-                    for (int j = 0; j < 16; j++)
-                        for (int k = 0; k < 8; k++)
-                            for (int l = 0; l < 16; l++)
+                for (int i = 0; i < 8; ++i)
+                    for (int j = 0; j < 16; ++j)
+                        for (int k = 0; k < 8; ++k)
+                            for (int l = 0; l < 16; ++l)
                                 if (canMoveToEx(i, j, k, l, gameState.SnakesX[s], gameState.SnakesY[s]))
                                     adj[i, j, k, l] = 1;
                                 else
                                     adj[i, j, k, l] = 0;
-                for (int i = 0; i < 8; i++)
-                    for (int j = 0; j < 16; j++)
+                for (int i = 0; i < 8; ++i)
+                    for (int j = 0; j < 16; ++j)
                     {
                         dist[i, j] = 30;
                         sptSet[i, j] = false;
@@ -296,11 +255,11 @@ namespace WoTGame
                     dist[(gameState.pOneX == -1) ? 0 : gameState.pOneX, gameState.pOneY] = 0;
                 else
                     dist[(gameState.pTwoX == -1) ? 0 : gameState.pTwoX, gameState.pTwoY] = 0;
-                for (int count = 0; count < 112; count++)
+                for (int count = 0; count < 112; ++count)
                 {
                     int min = 30, u1 = 0, u2 = 0;
-                    for (int v = 0; v < 8; v++)
-                        for (int w = 0; w < 16; w++)
+                    for (int v = 0; v < 8; ++v)
+                        for (int w = 0; w < 16; ++w)
                             if (sptSet[v, w] == false && dist[v, w] <= min && (v > 0 || w == 0))
                             {
                                 min = dist[v, w];
@@ -308,13 +267,13 @@ namespace WoTGame
                                 u2 = w;
                             }
                     sptSet[u1, u2] = true;
-                    for (int v = 0; v < 8; v++)
-                        for (int w = 0; w < 16; w++)
+                    for (int v = 0; v < 8; ++v)
+                        for (int w = 0; w < 16; ++w)
                             if ((v > 0 || w == 0) && !sptSet[v, w] && (adj[u1, u2, v, w] > 0) && dist[u1, u2] != 30 && dist[u1, u2] + adj[u1, u2, v, w] < dist[v, w])
                                 dist[v, w] = dist[u1, u2] + adj[u1, u2, v, w];
                 }
-                for (int v = 0; v < 8; v++)
-                    for (int w = 0; w < 16; w++)
+                for (int v = 0; v < 8; ++v)
+                    for (int w = 0; w < 16; ++w)
                         if ((v > 0 || w == 0) && (dist[v, w] == dist[gameState.SnakesX[s], gameState.SnakesY[s]] - 1))
                             if (canMoveToEx(v, w, gameState.SnakesX[s], gameState.SnakesY[s], gameState.SnakesX[s], gameState.SnakesY[s]))
                             {
@@ -323,8 +282,8 @@ namespace WoTGame
                             }
                 snakeDistances[s] = dist[gameState.SnakesX[s], gameState.SnakesY[s]];
             }
-            for (int i = 0; i < 7; i++)
-                for (int j = i + 1; j < 8; j++)
+            for (int i = 0; i < 7; ++i)
+                for (int j = i + 1; j < 8; ++j)
                     if (snakeDistances[i] > snakeDistances[j])
                     {
                         aux = snakes[i]; snakes[i] = snakes[j]; snakes[j] = aux;
@@ -332,7 +291,7 @@ namespace WoTGame
                         aux = nextStepX[i]; nextStepX[i] = nextStepX[j]; nextStepX[j] = aux;
                         aux = nextStepY[i]; nextStepY[i] = nextStepY[j]; nextStepY[j] = aux;
                     }
-            for (int i = 0; i < rolledSnakes; i++)
+            for (int i = 0; i < rolledSnakes; ++i)
             {
                 gameState.SnakesX[snakes[i]] = (nextStepX[i] == 0) ? -1 : nextStepX[i];
                 gameState.SnakesY[snakes[i]] = nextStepY[i];
@@ -340,18 +299,18 @@ namespace WoTGame
                 this.Invalidate();
             }
             rolledSnakes = 0;
-            for (int s = 0; s < 8; s++)
+            for (int s = 0; s < 8; ++s)
             {
-                for (int i = 0; i < 8; i++)
-                    for (int j = 0; j < 16; j++)
-                        for (int k = 0; k < 8; k++)
-                            for (int l = 0; l < 16; l++)
+                for (int i = 0; i < 8; ++i)
+                    for (int j = 0; j < 16; ++j)
+                        for (int k = 0; k < 8; ++k)
+                            for (int l = 0; l < 16; ++l)
                                 if (canMoveToEx(i, j, k, l, gameState.FoxesX[s], gameState.FoxesY[s]))
                                     adj[i, j, k, l] = 1;
                                 else
                                     adj[i, j, k, l] = 0;
-                for (int i = 0; i < 8; i++)
-                    for (int j = 0; j < 16; j++)
+                for (int i = 0; i < 8; ++i)
+                    for (int j = 0; j < 16; ++j)
                     {
                         dist[i, j] = 30;
                         sptSet[i, j] = false;
@@ -360,11 +319,11 @@ namespace WoTGame
                     dist[(gameState.pOneX == -1) ? 0 : gameState.pOneX, gameState.pOneY] = 0;
                 else
                     dist[(gameState.pTwoX == -1) ? 0 : gameState.pTwoX, gameState.pTwoY] = 0;
-                for (int count = 0; count < 112; count++)
+                for (int count = 0; count < 112; ++count)
                 {
                     int min = 30, u1 = 0, u2 = 0;
-                    for (int v = 0; v < 8; v++)
-                        for (int w = 0; w < 16; w++)
+                    for (int v = 0; v < 8; ++v)
+                        for (int w = 0; w < 16; ++w)
                             if (sptSet[v, w] == false && dist[v, w] <= min && (v > 0 || w == 0))
                             {
                                 min = dist[v, w];
@@ -372,13 +331,13 @@ namespace WoTGame
                                 u2 = w;
                             }
                     sptSet[u1, u2] = true;
-                    for (int v = 0; v < 8; v++)
-                        for (int w = 0; w < 16; w++)
+                    for (int v = 0; v < 8; ++v)
+                        for (int w = 0; w < 16; ++w)
                             if ((v > 0 || w == 0) && !sptSet[v, w] && (adj[u1, u2, v, w] > 0) && dist[u1, u2] != 30 && dist[u1, u2] + adj[u1, u2, v, w] < dist[v, w])
                                 dist[v, w] = dist[u1, u2] + adj[u1, u2, v, w];
                 }
-                for (int v = 0; v < 8; v++)
-                    for (int w = 0; w < 16; w++)
+                for (int v = 0; v < 8; ++v)
+                    for (int w = 0; w < 16; ++w)
                         if ((v > 0 || w == 0) && (dist[v, w] == dist[gameState.FoxesX[s], gameState.FoxesY[s]] - 1))
                             if (canMoveToEx(v, w, gameState.FoxesX[s], gameState.FoxesY[s], gameState.FoxesX[s], gameState.FoxesY[s]))
                             {
@@ -393,8 +352,8 @@ namespace WoTGame
                     p2 = getPointForCoords(gameState.pTwoX, gameState.pTwoY);
                 foxDistances[s] = (p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y);
             }
-            for (int i = 0; i < 7; i++)
-                for (int j = i + 1; j < 8; j++)
+            for (int i = 0; i < 7; ++i)
+                for (int j = i + 1; j < 8; ++j)
                     if (foxDistances[i] > foxDistances[j])
                     {
                         aux = foxes[i]; foxes[i] = foxes[j]; foxes[j] = aux;
@@ -402,7 +361,7 @@ namespace WoTGame
                         aux = nextStepX[i]; nextStepX[i] = nextStepX[j]; nextStepX[j] = aux;
                         aux = nextStepY[i]; nextStepY[i] = nextStepY[j]; nextStepY[j] = aux;
                     }
-            for (int i = 0; i < rolledFoxes; i++)
+            for (int i = 0; i < rolledFoxes; ++i)
             {
                 gameState.FoxesX[foxes[i]] = (nextStepX[i] == 0) ? -1 : nextStepX[i];
                 gameState.FoxesY[foxes[i]] = nextStepY[i];
