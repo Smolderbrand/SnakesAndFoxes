@@ -274,13 +274,13 @@ namespace WoTGame
                 }
                 for (int v = 0; v < 8; ++v)
                     for (int w = 0; w < 16; ++w)
-                        if ((v > 0 || w == 0) && (dist[v, w] == dist[gameState.SnakesX[s], gameState.SnakesY[s]] - 1))
-                            if (canMoveToEx(v, w, gameState.SnakesX[s], gameState.SnakesY[s], gameState.SnakesX[s], gameState.SnakesY[s]))
+                        if ((v > 0 || w == 0) && (dist[v, w] == dist[(gameState.SnakesX[s] == -1) ? 0 : gameState.SnakesX[s], gameState.SnakesY[s]] - 1))
+                            if (canMoveToEx(v, w, (gameState.SnakesX[s] == -1) ? 0 : gameState.SnakesX[s], gameState.SnakesY[s], (gameState.SnakesX[s] == -1) ? 0 : gameState.SnakesX[s], gameState.SnakesY[s]))
                             {
                                 nextStepX[s] = v;
                                 nextStepY[s] = w;
                             }
-                snakeDistances[s] = dist[gameState.SnakesX[s], gameState.SnakesY[s]];
+                snakeDistances[s] = dist[(gameState.SnakesX[s] == -1) ? 0 : gameState.SnakesX[s], gameState.SnakesY[s]];
             }
             for (int i = 0; i < 7; ++i)
                 for (int j = i + 1; j < 8; ++j)
@@ -338,8 +338,8 @@ namespace WoTGame
                 }
                 for (int v = 0; v < 8; ++v)
                     for (int w = 0; w < 16; ++w)
-                        if ((v > 0 || w == 0) && (dist[v, w] == dist[gameState.FoxesX[s], gameState.FoxesY[s]] - 1))
-                            if (canMoveToEx(v, w, gameState.FoxesX[s], gameState.FoxesY[s], gameState.FoxesX[s], gameState.FoxesY[s]))
+                        if ((v > 0 || w == 0) && (dist[v, w] == dist[(gameState.FoxesX[s] == -1) ? 0 : gameState.FoxesX[s], gameState.FoxesY[s]] - 1))
+                            if (canMoveToEx(v, w, (gameState.FoxesX[s] == -1) ? 0 : gameState.FoxesX[s], gameState.FoxesY[s], (gameState.FoxesX[s] == -1) ? 0 : gameState.FoxesX[s], gameState.FoxesY[s]))
                             {
                                 nextStepX[s] = v;
                                 nextStepY[s] = w;
