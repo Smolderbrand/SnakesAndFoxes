@@ -30,6 +30,7 @@ namespace WoTGame
             StatePlayerTwoFoxes = 8
         }
 
+        // Structure encapsulating the current game's data
         struct GameState
         {
             public int pOneX, pOneY;
@@ -48,6 +49,8 @@ namespace WoTGame
 
         private int noPlayers, isSimulated;
         private int rolledMoves, rolledSnakes, rolledFoxes;
+
+        // "Capture" here refers to the selected enemy token
         private int isCaptured, capturedID;
         private Point capture;
 
@@ -62,6 +65,10 @@ namespace WoTGame
             this.Invalidate();
         }
 
+        /* Handler for the timer's tick (at small, <1 second intervals)
+         * The purpose of this timer is to periodically convert the
+         * mouse cursor's position from screen space to board space */
+      
         private void tmrTimerTick(object sender, System.EventArgs e)
         {
             int x = this.PointToClient(Cursor.Position).X;
@@ -98,6 +105,8 @@ namespace WoTGame
             }
         }
 
+        // This procedure paints the board and the tokens with vector
+        // graphics, where the size can vary as a function of form's size
         protected void OnPaint(object sender, PaintEventArgs e)
         {
             Pen p = new Pen(Color.Blue, 2);
@@ -193,6 +202,8 @@ namespace WoTGame
             }
         }
 
+        // This is where moves are handled per se. According to the current game state, it is checked
+        // whether the token (player or enemy) can move to that space and, in the affirmative, moved.
         private void frmMainMouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -285,6 +296,7 @@ namespace WoTGame
             this.Invalidate();
         }
 
+        // This is the function where the dice are rolled
         private void btnRollClick(object sender, EventArgs e)
         {
             if ((gameState.StateID == 1) || (gameState.StateID == 5))
@@ -311,6 +323,8 @@ namespace WoTGame
             }
         }
 
+        // This function reads the game parameters from the "game.xml"
+        // file and sets them accordingly.
         private void frmMainLoad(object sender, EventArgs e)
         {
             XmlDocument doc = new XmlDocument();
