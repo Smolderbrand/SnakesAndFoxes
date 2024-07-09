@@ -8,3 +8,13 @@ C:\Users\Filip\source\repos\WoTGame\WoTGame\obj\Release\WoTGame.csproj.GenerateR
 C:\Users\Filip\source\repos\WoTGame\WoTGame\obj\Release\WoTGame.csproj.CoreCompileInputs.cache
 C:\Users\Filip\source\repos\WoTGame\WoTGame\obj\Release\WoTGame.exe
 C:\Users\Filip\source\repos\WoTGame\WoTGame\obj\Release\WoTGame.pdb
+C:\Users\Filip\source\repos\WoTGame\bin\Release\WoTGame.exe.config
+C:\Users\Filip\source\repos\WoTGame\bin\Release\WoTGame.exe
+C:\Users\Filip\source\repos\WoTGame\bin\Release\WoTGame.pdb
+C:\Users\Filip\source\repos\WoTGame\obj\Release\WoTGame.csproj.AssemblyReference.cache
+C:\Users\Filip\source\repos\WoTGame\obj\Release\WoTGame.frmMain.resources
+C:\Users\Filip\source\repos\WoTGame\obj\Release\WoTGame.Properties.Resources.resources
+C:\Users\Filip\source\repos\WoTGame\obj\Release\WoTGame.csproj.GenerateResource.cache
+C:\Users\Filip\source\repos\WoTGame\obj\Release\WoTGame.csproj.CoreCompileInputs.cache
+C:\Users\Filip\source\repos\WoTGame\obj\Release\WoTGame.exe
+C:\Users\Filip\source\repos\WoTGame\obj\Release\WoTGame.pdb

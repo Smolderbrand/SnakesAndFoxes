@@ -18,3 +18,13 @@ C:\Users\Filip\source\repos\WoTGame\WoTGame\obj\Debug\WoTGame.csproj.GenerateRes
 C:\Users\Filip\source\repos\WoTGame\WoTGame\obj\Debug\WoTGame.csproj.CoreCompileInputs.cache
 C:\Users\Filip\source\repos\WoTGame\WoTGame\obj\Debug\WoTGame.exe
 C:\Users\Filip\source\repos\WoTGame\WoTGame\obj\Debug\WoTGame.pdb
+C:\Users\Filip\source\repos\WoTGame\bin\Debug\WoTGame.exe.config
+C:\Users\Filip\source\repos\WoTGame\bin\Debug\WoTGame.exe
+C:\Users\Filip\source\repos\WoTGame\bin\Debug\WoTGame.pdb
+C:\Users\Filip\source\repos\WoTGame\obj\Debug\WoTGame.csproj.AssemblyReference.cache
+C:\Users\Filip\source\repos\WoTGame\obj\Debug\WoTGame.frmMain.resources
+C:\Users\Filip\source\repos\WoTGame\obj\Debug\WoTGame.Properties.Resources.resources
+C:\Users\Filip\source\repos\WoTGame\obj\Debug\WoTGame.csproj.GenerateResource.cache
+C:\Users\Filip\source\repos\WoTGame\obj\Debug\WoTGame.csproj.CoreCompileInputs.cache
+C:\Users\Filip\source\repos\WoTGame\obj\Debug\WoTGame.exe
+C:\Users\Filip\source\repos\WoTGame\obj\Debug\WoTGame.pdb

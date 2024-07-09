@@ -131,10 +131,9 @@ namespace WoTGame
             int[] foxDistances = new int[8];
             int[] nextStepX = new int[8];
             int[] nextStepY = new int[8];
-            int[,,,] adj = new int[8, 16, 8, 16];
-            int[,] dist = new int[8, 16];
-            bool[,] sptSet = new bool[8, 16];
-            int aux;
+            int[,,,] adj = new int[8, 16, 8, 16];   // adjacency matrix for the directed graph of the board
+            int[,] dist = new int[8, 16];           // shortest distances to a node on the board
+            bool[,] sptSet = new bool[8, 16];       // Shortest-Path in the Tree identification SET
             for (int s = 0; s < 8; ++s)
             {
                 for (int i = 0; i < 8; ++i)
@@ -186,10 +185,10 @@ namespace WoTGame
                 for (int j = i + 1; j < 8; ++j)
                     if (snakeDistances[i] > snakeDistances[j])
                     {
-                        aux = snakes[i]; snakes[i] = snakes[j]; snakes[j] = aux;
-                        aux = snakeDistances[i]; snakeDistances[i] = snakeDistances[j]; snakeDistances[j] = aux;
-                        aux = nextStepX[i]; nextStepX[i] = nextStepX[j]; nextStepX[j] = aux;
-                        aux = nextStepY[i]; nextStepY[i] = nextStepY[j]; nextStepY[j] = aux;
+                        (snakes[i], snakes[j]) = (snakes[j], snakes[i]);
+                        (snakeDistances[i], snakeDistances[j]) = (snakeDistances[j], snakeDistances[i]);
+                        (nextStepX[i], nextStepX[j]) = (nextStepX[j], nextStepX[i]);
+                        (nextStepY[i], nextStepY[j]) = (nextStepY[j], nextStepY[i]);
                     }
             for (int i = 0; i < rolledSnakes; ++i)
             {
@@ -256,10 +255,10 @@ namespace WoTGame
                 for (int j = i + 1; j < 8; ++j)
                     if (foxDistances[i] > foxDistances[j])
                     {
-                        aux = foxes[i]; foxes[i] = foxes[j]; foxes[j] = aux;
-                        aux = foxDistances[i]; foxDistances[i] = foxDistances[j]; foxDistances[j] = aux;
-                        aux = nextStepX[i]; nextStepX[i] = nextStepX[j]; nextStepX[j] = aux;
-                        aux = nextStepY[i]; nextStepY[i] = nextStepY[j]; nextStepY[j] = aux;
+                        (foxes[i], foxes[j]) = (foxes[j], foxes[i]);
+                        (foxDistances[i], foxDistances[j]) = (foxDistances[j], foxDistances[i]);
+                        (nextStepX[i], nextStepX[j]) = (nextStepX[j], nextStepX[i]);
+                        (nextStepY[i], nextStepY[j]) = (nextStepY[j], nextStepY[i]);
                     }
             for (int i = 0; i < rolledFoxes; ++i)
             {

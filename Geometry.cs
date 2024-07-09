@@ -54,26 +54,26 @@ namespace WoTGame
             return (!isEnemy(x, y)) && (!isPlayer(x, y));
         }
 
-        // Here we see if the player moving the token (x,y) can move to (z,w)
-        private bool canMoveTo(int x, int y, int z, int w)
+        // Here we see if the player moving the token (startX,startY) can move to (targetX,targetY)
+        private bool canMoveTo(int startX, int startY, int targetX, int targetY)
         {
             int adjacent = 0;
-            if ((x == -1) && (z == 1))
+            if ((startX == -1) && (targetX == 1))
                 adjacent = 1;
-            if ((x == 1) && (z == -1))
+            if ((startX == 1) && (targetX == -1))
                 adjacent = 1;
-            if ((y == w) && (x + 1 == z))
+            if ((startY == targetY) && (startX + 1 == targetX))
                 adjacent = 1;
-            if ((y == w) && (z + 1 == x))
+            if ((startY == targetY) && (targetX + 1 == startX))
                 adjacent = 1;
-            if ((x == z) && ((w + 1) % 16 == y) && ((x % 2 == 0) || (x == 7)))
+            if ((startX == targetX) && ((targetY + 1) % 16 == startY) && ((startX % 2 == 0) || (startX == 7)))
                 adjacent = 1;
-            if ((x == z) && ((y + 1) % 16 == w) && (x % 2 == 1))
+            if ((startX == targetX) && ((startY + 1) % 16 == targetY) && (startX % 2 == 1))
                 adjacent = 1;
-            if ((x == 0) || (z == 0)) return false;
+            if ((startX == 0) || (targetX == 0)) return false;
             if (adjacent == 0) return false;
-            if (isFree(z, w)) return true;
-            if (isEnemy(x, y) && isPlayer(z, w)) return true;
+            if (isFree(targetX, targetY)) return true;
+            if (isEnemy(startX, startY) && isPlayer(targetX, targetY)) return true;
             return false;
         }
 
@@ -91,27 +91,27 @@ namespace WoTGame
             }
         }
 
-        // Here we see if on the path to enemy (u,v) two positions (x,y) and (z,w)
-        // are consecutive and also valid for the movement of the enemy towards (u,v)
-        private bool canMoveToEx(int x, int y, int z, int w, int u, int v)
+        // Here we see if on the path to enemy (u,v) two positions (startX,startY) and (targetX,targetY)
+        // are consecutive and also valid for the movement of the enemy from (u,v)
+        private bool canMoveToEx(int startX, int startY, int targetX, int targetY, int u, int v)
         {
             int adjacent = 0;
-            if ((x == 0) && (z == 1))
+            if ((startX == 0) && (targetX == 1))
                 adjacent = 1;
-            if ((x == 1) && (z == 0))
+            if ((startX == 1) && (targetX == 0))
                 adjacent = 1;
-            if ((y == w) && (x + 1 == z))
+            if ((startY == targetY) && (startX + 1 == targetX))
                 adjacent = 1;
-            if ((y == w) && (z + 1 == x))
+            if ((startY == targetY) && (targetX + 1 == startX))
                 adjacent = 1;
-            if ((x == z) && ((y + 1) % 16 == w) && ((x % 2 == 0) || (x == 7)))
+            if ((startX == targetX) && ((startY + 1) % 16 == targetY) && ((startX % 2 == 0) || (startX == 7)))
                 adjacent = 1;
-            if ((x == z) && ((w + 1) % 16 == y) && (x % 2 == 1))
+            if ((startX == targetX) && ((targetY + 1) % 16 == startY) && (startX % 2 == 1))
                 adjacent = 1;
-            if (((x == 0) && (y > 0)) || ((z == 0) && (w > 0))) return false;
+            if (((startX == 0) && (startY > 0)) || ((targetX == 0) && (targetY > 0))) return false;
             if (adjacent == 0) return false;
-            if ((isFree(z, w) || isPlayer(z, w)) && (isFree(x, y) || isPlayer(x, y))) return true;
-            if ((z == u) && (w == v) && (isFree(x, y) || isPlayer(x, y))) return true;
+            if ((isFree(targetX, targetY) || isPlayer(targetX, targetY)) && (isFree(startX, startY) || isPlayer(startX, startY))) return true;
+            if ((targetX == u) && (targetY == v) && (isFree(startX, startY) || isPlayer(startX, startY))) return true;
             return false;
         }
 
